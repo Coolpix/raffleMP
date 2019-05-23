@@ -5,10 +5,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { ProjectDashboardService } from './project.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import {FuseConfigService} from '../../../@fuse/services/config.service';
-import {QueryRef} from 'apollo-angular/QueryRef';
-import {R} from 'apollo-angular/types';
-import {Observable, Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import { Observable, Subscription} from 'rxjs';
+import { map} from 'rxjs/operators';
 
 @Component({
     selector     : 'project-dashboard',
@@ -24,7 +22,7 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
 
     widgets: any;
     private gifts: Observable<any>;
-    private data: Observable<any>;
+    private rollers: Observable<any>;
     private roller: Observable<any>;
     private $roller: Subscription;
 
@@ -79,13 +77,19 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
             this.fuseConfig = config;
         });
         this.getGifts();
-        this.widgets = this._projectDashboardService.widgets[0];
+        this.getRollers();
     }
 
     // tslint:disable-next-line:typedef
     private getGifts() {
         this.gifts = this._projectDashboardService.getGifts().valueChanges.pipe(
             map(({data}) => data.gifts));
+    }
+
+    // tslint:disable-next-line:typedef
+    private getRollers() {
+        this.rollers = this._projectDashboardService.getRollers().valueChanges.pipe(
+            map(({data}) => data.rollers));
     }
 
 // tslint:disable-next-line:typedef

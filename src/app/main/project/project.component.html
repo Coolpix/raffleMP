@@ -21,7 +21,7 @@
 
             <mat-tab-group dynamicHeight style="max-height: max-content">
 
-                <mat-tab label="Premio 1">
+                <mat-tab label="Sorteo">
 
                     <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
                          [@animateStagger]="{value:'50'}">
@@ -31,7 +31,7 @@
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
-                                <img src="../../../assets/images/premios/mochila.jpg">
+                                <img src="../../../assets/images/premios/mochila_rb.jpg">
                                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
                                      fxLayoutAlign="space-between center">
                                     <div class="h3"></div>
@@ -75,355 +75,136 @@
 
                 </mat-tab>
 
-                <mat-tab label="Premio 2">
+                <mat-tab label="Socios">
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
                          [@animateStagger]="{value:'50'}">
 
-                        <!-- WIDGET 1 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                        <!-- WIDGET 11 -->
+                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="row"
+                                     fxFlex="100">
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+
+                                <div class="p-24 mb-8 border-bottom" fxLayout="row"
                                      fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
+                                    <div class="h2">Socios</div>
+                                    <button mat-raised-button color="warn">Añadir</button>
                                 </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
+                                <mat-table #table [dataSource]="rollers">
+
+                                    <!-- Avatar Column -->
+                                    <ng-container matColumnDef="avatar">
+                                        <mat-header-cell fxFlex="96px" *matHeaderCellDef></mat-header-cell>
+                                        <mat-cell fxFlex="96px" *matCellDef="let roller">
+                                            <img class="avatar" *ngIf="roller.avatar" [alt]="roller.name"
+                                                 [src]="roller.avatar"/>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                                        <mat-cell *matCellDef="let roller">
+                                            <p class="text-truncate font-weight-600">{{roller.name}}</p>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="gift">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Premio
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let roller" fxHide fxShow.gt-sm>
+                                            <p class="position text-truncate">
+                                                {{roller.gift?.name}}
+                                            </p>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row
+                                        *matHeaderRowDef="['avatar', 'name', 'gift']"></mat-header-row>
+                                    <mat-row *matRowDef="let roller; columns: ['avatar', 'name', 'gift']">
+                                    </mat-row>
+                                </mat-table>
                             </div>
                             <!-- / Front -->
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
                         </fuse-widget>
-                        <!-- / WIDGET 1 -->
-
-                        <!-- WIDGET 2 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 2 -->
-
-                        <!-- WIDGET 3 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 3 -->
-
-                        <!-- WIDGET 4 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 4 -->
+                        <!-- / WIDGET 11 -->
 
                     </div>
                     <!-- / WIDGET GROUP -->
 
                 </mat-tab>
 
-                <mat-tab label="Premio 3">
+                <mat-tab label="Premios">
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
                          [@animateStagger]="{value:'50'}">
 
-                        <!-- WIDGET 1 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                        <!-- WIDGET 11 -->
+                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="row"
+                                     fxFlex="100">
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
+
+                                <div class="p-24 mb-8 border-bottom" fxLayout="row"
                                      fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
+                                    <div class="h2">Premios</div>
+                                    <button mat-raised-button color="warn">Añadir</button>
                                 </div>
 
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
+                                <mat-table #table [dataSource]="gifts">
+
+                                    <!-- Avatar Column -->
+                                    <ng-container matColumnDef="photo">
+                                        <mat-header-cell fxFlex="96px" *matHeaderCellDef></mat-header-cell>
+                                        <mat-cell fxFlex="96px" *matCellDef="let gift">
+                                            <img class="avatar" *ngIf="gift.photo" [alt]="gift.name"
+                                                 [src]="gift.photo"/>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                                        <mat-cell *matCellDef="let gift">
+                                            <p class="text-truncate font-weight-600">{{gift.name}}</p>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="winner">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Ganador
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let gift" fxHide fxShow.gt-sm>
+                                            <p class="position text-truncate">
+                                                {{gift.roller?.name}}
+                                            </p>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row
+                                        *matHeaderRowDef="['photo', 'name', 'winner']"></mat-header-row>
+                                    <mat-row *matRowDef="let gift; columns: ['photo', 'name', 'winner']">
+                                    </mat-row>
+                                </mat-table>
                             </div>
                             <!-- / Front -->
 
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
                         </fuse-widget>
-                        <!-- / WIDGET 1 -->
-
-                        <!-- WIDGET 2 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 2 -->
-
-                        <!-- WIDGET 3 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 3 -->
-
-                        <!-- WIDGET 4 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/cards/card1.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="space-between">
-                                    <img src="http://angular-material.fusetheme.com/assets/images/demo-content/morain-lake.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 4 -->
+                        <!-- / WIDGET 11 -->
 
                     </div>
                     <!-- / WIDGET GROUP -->
 
                 </mat-tab>
+
             </mat-tab-group>
 
         </div>

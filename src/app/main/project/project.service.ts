@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import {Apollo, gql, QueryRef} from 'apollo-angular-boost';
 import {R} from 'apollo-angular/types';
@@ -8,70 +7,17 @@ import {R} from 'apollo-angular/types';
 @Injectable()
 export class ProjectDashboardService
 {
-    projects: QueryRef<any, R>;
-    widgets: any[];
-
     /**
      * Constructor
      *
      * @param {HttpClient} _httpClient
+     * @param apollo
      */
     constructor(
         private _httpClient: HttpClient,
         private apollo: Apollo
     )
-    {
-        this.widgets = [{
-            'widget1'      : {
-                'title' : 'Overdue',
-                'data'  : {
-                    'label': 'Mochila Powerslide',
-                    'count': 4,
-                    'extra': {
-                        'label': 'Yesterday\'s overdue',
-                        'count': 2
-                    }
-                },
-                'detail': 'Laura Campos'
-            },
-            'widget2'      : {
-                'title' : 'Overdue',
-                'data'  : {
-                    'label': 'Rodamientos Rollerblade',
-                    'count': 4,
-                    'extra': {
-                        'label': 'Yesterday\'s overdue',
-                        'count': 2
-                    }
-                },
-                'detail': 'Laura Campos'
-            },
-            'widget3'      : {
-                'title' : 'Issues',
-                'data'  : {
-                    'label': 'OPEN',
-                    'count': 32,
-                    'extra': {
-                        'label': 'Closed today',
-                        'count': 0
-                    }
-                },
-                'detail': 'You can show some detailed information about this widget in here.'
-            },
-            'widget4'      : {
-                'title' : 'Features',
-                'data'  : {
-                    'label': 'PROPOSALS',
-                    'count': 42,
-                    'extra': {
-                        'label': 'Implemented',
-                        'count': 8
-                    }
-                },
-                'detail': 'You can show some detailed information about this widget in here.'
-            }
-        }];
-    }
+    {}
 
     /**
      * Get Rollers
@@ -109,6 +55,7 @@ export class ProjectDashboardService
                         id
                         name
                         roller {
+                            id
                             name
                         }
                     }
@@ -133,6 +80,7 @@ export class ProjectDashboardService
                             id
                             name
                             roller {
+                                id
                                 name
                             }
                         }
