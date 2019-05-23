@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import {Apollo, gql, QueryRef} from 'apollo-angular-boost';
+import {R} from 'apollo-angular/types';
 
 @Injectable()
 export class ProjectDashboardService
 {
-    projects: any[];
+    projects: QueryRef<any, R>;
     widgets: any[];
 
     /**
@@ -15,23 +17,10 @@ export class ProjectDashboardService
      * @param {HttpClient} _httpClient
      */
     constructor(
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private apollo: Apollo
     )
     {
-        this.projects = [
-            {
-                'name': 'ACME Corp. Backend App'
-            },
-            {
-                'name': 'ACME Corp. Frontend App'
-            },
-            {
-                'name': 'Creapond'
-            },
-            {
-                'name': 'Withinpixels'
-            }
-        ];
         this.widgets = [{
             'widget1'      : {
                 'title' : 'Overdue',
@@ -85,58 +74,73 @@ export class ProjectDashboardService
     }
 
     /**
-     * Resolver
+     * Get Rollers
      *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
+     * @returns {QueryRef<any, R>;}
      */
-    /*resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
-
-        return new Promise((resolve, reject) => {
-
-            Promise.all([
-                this.getProjects(),
-                this.getWidgets()
-            ]).then(
-                () => {
-                    resolve();
-                },
-                reject
-            );
-        });
-    }*/
-
-    /**
-     * Get projects
-     *
-     * @returns {Promise<any>}
-     */
-    getProjects(): Promise<any>
-    {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/project-dashboard-projects')
-                .subscribe((response: any) => {
-                    this.projects = response;
-                    resolve(response);
-                }, reject);
+    getRollers(): QueryRef<any, R> {
+        return this.apollo.watchQuery<any>({
+            // language=GraphQL
+            query: gql`
+            query {
+                rollers {
+                    id
+                    name
+                    gift {
+                        id
+                        name
+                    }
+                }
+            }`,
         });
     }
 
     /**
-     * Get widgets
+     * Get Gifts
      *
-     * @returns {Promise<any>}
+     * @returns {QueryRef<any, R>;}
      */
-    getWidgets(): Promise<any>
-    {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/project-dashboard-widgets')
-                .subscribe((response: any) => {
-                    this.widgets = response;
-                    resolve(response);
-                }, reject);
+    getGifts(): QueryRef<any, R> {
+        return this.apollo.watchQuery<any>({
+            // language=GraphQL
+            query: gql`
+                query {
+                    gifts {
+                        id
+                        name
+                        roller {
+                            name
+                        }
+                    }
+                }`,
+        });
+    }
+
+    /**
+     * Get Gifts
+     *
+     * @returns {QueryRef<any, R>;}
+     */
+    setGifts(id, rollerID): Observable<any> {
+        return this.apollo.mutate({
+            // language=GraphQL
+            mutation: gql`
+                mutation updateGift(
+                        $id: ID!,
+                        $rollerID: ID!
+                    ){
+                        updateGift(id: $id, rollerID: $rollerID) {
+                            id
+                            name
+                            roller {
+                                name
+                            }
+                        }
+                    }`,
+            variables: {
+                id: id,
+                rollerID: rollerID
+            }
         });
     }
 }

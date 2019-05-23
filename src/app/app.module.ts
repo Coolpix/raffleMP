@@ -17,6 +17,7 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import {ProjectDashboardModule} from './main/project/project.module';
+import {ApolloBoost, ApolloBoostModule, InMemoryCache} from 'apollo-angular-boost';
 
 const appRoutes: Routes = [
     {
@@ -24,6 +25,17 @@ const appRoutes: Routes = [
         redirectTo: 'project'
     }
 ];
+
+const defaultOptions = {
+    watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+    },
+    query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+    },
+}
 
 @NgModule({
     declarations: [
@@ -53,7 +65,8 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        ProjectDashboardModule
+        ProjectDashboardModule,
+        ApolloBoostModule
     ],
     bootstrap   : [
         AppComponent
@@ -61,4 +74,9 @@ const appRoutes: Routes = [
 })
 export class AppModule
 {
+    constructor(apolloBoost: ApolloBoost) {
+        apolloBoost.create({
+            uri: 'http://localhost:4000/'
+        });
+    }
 }

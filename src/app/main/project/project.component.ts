@@ -1,10 +1,14 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProjectDashboardService } from './project.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import {FuseConfigService} from '../../../@fuse/services/config.service';
+import {QueryRef} from 'apollo-angular/QueryRef';
+import {R} from 'apollo-angular/types';
+import {Observable, Subscription} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
     selector     : 'project-dashboard',
@@ -13,20 +17,23 @@ import {FuseConfigService} from '../../../@fuse/services/config.service';
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ProjectDashboardComponent implements OnInit
+export class ProjectDashboardComponent implements OnInit, OnDestroy
 {
-    projects: any[];
-    selectedProject: any;
-
-    widgets: any;
 
     fuseConfig: any;
+
+    widgets: any;
+    private gifts: Observable<any>;
+    private data: Observable<any>;
+    private roller: Observable<any>;
+    private $roller: Subscription;
 
     /**
      * Constructor
      *
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {ProjectDashboardService} _projectDashboardService
+     * @param _fuseConfigService
      */
     constructor(
         private _fuseSidebarService: FuseSidebarService,
@@ -67,14 +74,45 @@ export class ProjectDashboardComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.projects = this._projectDashboardService.projects;
-        this.selectedProject = this.projects[0];
-        this.widgets = this._projectDashboardService.widgets[0];
         // Subscribe to config change
-        this._fuseConfigService.config
-            .subscribe((config) => {
-                this.fuseConfig = config;
-            });
+        this._fuseConfigService.config.subscribe((config) => {
+            this.fuseConfig = config;
+        });
+        this.getGifts();
+        this.widgets = this._projectDashboardService.widgets[0];
+    }
+
+    // tslint:disable-next-line:typedef
+    private getGifts() {
+        this.gifts = this._projectDashboardService.getGifts().valueChanges.pipe(
+            map(({data}) => data.gifts));
+    }
+
+// tslint:disable-next-line:typedef
+    getRoller(id: any) {
+       this.roller = this._projectDashboardService.getRollers().valueChanges.pipe(
+            map(({data}) => {
+                const result = data.rollers.filter(roller => roller.gift === null);
+                const winner = result[this.getRandomArbitrary(0, result.length - 1)];
+                // tslint:disable-next-line:no-shadowed-variable
+                this._projectDashboardService.setGifts(id, winner.id).subscribe(({data}) => {
+                    console.log(data);
+                });
+                this.$roller.unsubscribe();
+            })
+        );
+       this.$roller = this.roller.subscribe();
+    }
+
+    ngOnDestroy(): void {
+        this.$roller.unsubscribe();
+    }
+
+    // tslint:disable-next-line:typedef
+    private getRandomArbitrary(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
 

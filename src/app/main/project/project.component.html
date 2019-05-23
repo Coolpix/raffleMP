@@ -17,7 +17,7 @@
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <div class="content">
+        <div class="content" style="background-image: url('../../../assets/images/backgrounds/fondo.jpg')">
 
             <mat-tab-group dynamicHeight style="max-height: max-content">
 
@@ -25,9 +25,9 @@
 
                     <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
                          [@animateStagger]="{value:'50'}">
-                        <!-- WIDGET 1 -->
+                        <!-- WIDGET -->
                         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25" *ngFor="let gift of gifts | async">
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
@@ -36,13 +36,17 @@
                                      fxLayoutAlign="space-between center">
                                     <div class="h3"></div>
                                     <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
+                                            aria-label="more" *ngIf="gift.roller">
                                         <mat-icon>360</mat-icon>
+                                    </button>
+                                    <button mat-icon-button class="fuse-widget-flip-button"
+                                            aria-label="more" *ngIf="!gift.roller" (click)="getRoller(gift.id)">
+                                        <mat-icon>flash_on</mat-icon>
                                     </button>
                                 </div>
 
                                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-900">{{widgets.widget1.data.label}}
+                                    <div class="h3 secondary-text font-weight-900">{{gift.name}}
                                     </div>
                                 </div>
                             </div>
@@ -57,137 +61,15 @@
                                 <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
                                     <img src="../../../assets/images/rollers/foto1.jpeg">
 
-                                    <div class="h1 font-weight-1000">{{widgets.widget1.detail}}
+                                    <div class="h1 font-weight-1000">{{gift.roller?.name}}
                                     </div>
                                 </div>
                             </div>
                             <!-- / Back -->
 
                         </fuse-widget>
-                        <!-- / WIDGET 1 -->
+                        <!-- / WIDGET -->
 
-                        <!-- WIDGET 2 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/premios/mochila.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-900">{{widgets.widget2.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <img src="../../../assets/images/premios/mochila.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 2 -->
-
-                        <!-- WIDGET 3 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/premios/mochila.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <img src="../../../assets/images/premios/mochila.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 3 -->
-
-                        <!-- WIDGET 4 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-                                <img src="../../../assets/images/premios/mochila.jpg">
-                                <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
-                                     fxLayoutAlign="space-between center">
-                                    <div class="h3"></div>
-                                    <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                </div>
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="h3 secondary-text font-weight-500">{{widgets.widget3.data.label}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
-                            <!-- Back -->
-                            <div class="fuse-widget-back p-16 pt-32">
-                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                        aria-label="Flip widget">
-                                    <mat-icon class="s-16">close</mat-icon>
-                                </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <img src="../../../assets/images/premios/mochila.jpg">
-
-                                    <div class="h1 font-weight-1000">{{widgets.widget2.detail}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- / Back -->
-
-                        </fuse-widget>
-                        <!-- / WIDGET 4 -->
                     </div>
                     <!-- / WIDGET GROUP -->
 
