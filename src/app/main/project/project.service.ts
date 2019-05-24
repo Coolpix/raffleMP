@@ -32,6 +32,7 @@ export class ProjectDashboardService
                 rollers {
                     id
                     name
+                    avatar
                     gift {
                         id
                         name
@@ -54,6 +55,7 @@ export class ProjectDashboardService
                     gifts {
                         id
                         name
+                        photo
                         roller {
                             id
                             name
@@ -79,6 +81,7 @@ export class ProjectDashboardService
                         updateGift(id: $id, rollerID: $rollerID) {
                             id
                             name
+                            photo
                             roller {
                                 id
                                 name

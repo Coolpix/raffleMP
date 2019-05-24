@@ -31,7 +31,7 @@
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
-                                <img src="../../../assets/images/premios/mochila_rb.jpg">
+                                <img src='../../../assets/images/premios/{{gift.photo}}'>
                                 <div class="pl-16 pr-8 py-16 h-52" fxLayout="row"
                                      fxLayoutAlign="space-between center">
                                     <div class="h3"></div>
@@ -101,7 +101,7 @@
                                         <mat-header-cell fxFlex="96px" *matHeaderCellDef></mat-header-cell>
                                         <mat-cell fxFlex="96px" *matCellDef="let roller">
                                             <img class="avatar" *ngIf="roller.avatar" [alt]="roller.name"
-                                                 [src]="roller.avatar"/>
+                                                 [src]="'../../../assets/images/rollers/'+roller.avatar"/>
                                         </mat-cell>
                                     </ng-container>
 
@@ -166,7 +166,7 @@
                                         <mat-header-cell fxFlex="96px" *matHeaderCellDef></mat-header-cell>
                                         <mat-cell fxFlex="96px" *matCellDef="let gift">
                                             <img class="avatar" *ngIf="gift.photo" [alt]="gift.name"
-                                                 [src]="gift.photo"/>
+                                                 [src]="'../../../assets/images/premios/'+gift.photo"/>
                                         </mat-cell>
                                     </ng-container>
 
