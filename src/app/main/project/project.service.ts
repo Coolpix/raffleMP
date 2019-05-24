@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Apollo, gql, QueryRef} from 'apollo-angular-boost';
+
 import {R} from 'apollo-angular/types';
+import {Apollo, QueryRef} from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Injectable()
 export class ProjectDashboardService
@@ -36,6 +38,7 @@ export class ProjectDashboardService
                     gift {
                         id
                         name
+                        photo
                     }
                 }
             }`,
@@ -59,6 +62,7 @@ export class ProjectDashboardService
                         roller {
                             id
                             name
+                            avatar
                         }
                     }
                 }`,
@@ -85,6 +89,7 @@ export class ProjectDashboardService
                             roller {
                                 id
                                 name
+                                avatar
                             }
                         }
                     }`,

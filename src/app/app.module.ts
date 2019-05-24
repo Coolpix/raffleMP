@@ -17,7 +17,8 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import {ProjectDashboardModule} from './main/project/project.module';
-import {ApolloBoost, ApolloBoostModule, InMemoryCache} from 'apollo-angular-boost';
+import { GraphQLModule } from './graphql.module';
+import {ApolloModule} from 'apollo-angular';
 
 const appRoutes: Routes = [
     {
@@ -66,17 +67,12 @@ const defaultOptions = {
         // App modules
         LayoutModule,
         ProjectDashboardModule,
-        ApolloBoostModule
+        ApolloModule,
+        GraphQLModule
     ],
     bootstrap   : [
         AppComponent
     ]
 })
 export class AppModule
-{
-    constructor(apolloBoost: ApolloBoost) {
-        apolloBoost.create({
-            uri: 'http://localhost:4000/'
-        });
-    }
-}
+{}

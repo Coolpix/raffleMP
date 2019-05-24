@@ -9,6 +9,7 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 import { ProjectDashboardService } from './project.service';
 import {ProjectDashboardComponent} from './project.component';
+import {ApolloModule} from 'apollo-angular';
 
 const routes: Routes = [
     {
@@ -24,7 +25,7 @@ const routes: Routes = [
     declarations: [
         ProjectDashboardComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -40,7 +41,8 @@ const routes: Routes = [
 
         FuseSharedModule,
         FuseSidebarModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        ApolloModule
     ],
     providers   : [
         ProjectDashboardService

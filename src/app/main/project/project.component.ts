@@ -21,10 +21,11 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
     fuseConfig: any;
 
     widgets: any;
-    private gifts: Observable<any>;
+    private gifts: Subscription;
     private rollers: Observable<any>;
     private roller: Observable<any>;
     private $roller: Subscription;
+    private arrayGifts: Observable<any>;
 
     /**
      * Constructor
@@ -83,8 +84,16 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
     // tslint:disable-next-line:typedef
     private getGifts() {
         this.gifts = this._projectDashboardService.getGifts().valueChanges.pipe(
-            map(({data}) => data.gifts));
+            map(({data}) => data.gifts)).subscribe((gifts) => {
+            console.log(gifts);
+            this.arrayGifts = gifts;
+        });
     }
+
+    /*// tslint:disable-next-line:typedef
+    private getGifts() {
+        this.gifts = this._projectDashboardService.getGifts().valueChanges;
+    }*/
 
     // tslint:disable-next-line:typedef
     private getRollers() {
@@ -92,15 +101,17 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
             map(({data}) => data.rollers));
     }
 
-// tslint:disable-next-line:typedef
+    // tslint:disable-next-line:typedef
     getRoller(id: any) {
        this.roller = this._projectDashboardService.getRollers().valueChanges.pipe(
             map(({data}) => {
                 const result = data.rollers.filter(roller => roller.gift === null);
-                const winner = result[this.getRandomArbitrary(0, result.length - 1)];
+                const winner = result[this.getRandomInt(0, result.length)];
                 // tslint:disable-next-line:no-shadowed-variable
                 this._projectDashboardService.setGifts(id, winner.id).subscribe(({data}) => {
-                    console.log(data);
+                    console.log(data, this.arrayGifts);
+                    const index = this.searchInArray(this.arrayGifts, data.updateGift.id);
+                    this.arrayGifts[index].roller = data.updateGift.roller;
                 });
                 this.$roller.unsubscribe();
             })
@@ -113,10 +124,18 @@ export class ProjectDashboardComponent implements OnInit, OnDestroy
     }
 
     // tslint:disable-next-line:typedef
-    private getRandomArbitrary(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    private getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    // tslint:disable-next-line:typedef
+    private searchInArray(obj, needle) {
+        for (let i = 0; i < obj.length; i++){
+            // tslint:disable-next-line:triple-equals
+            if (obj[i].id == needle){
+                return i;
+            }
+        }
     }
 }
 

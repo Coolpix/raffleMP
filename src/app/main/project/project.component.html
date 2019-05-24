@@ -27,7 +27,7 @@
                          [@animateStagger]="{value:'50'}">
                         <!-- WIDGET -->
                         <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25" *ngFor="let gift of gifts | async">
+                                     fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25" *ngFor="let gift of arrayGifts">
 
                             <!-- Front -->
                             <div class="fuse-widget-front">
@@ -36,12 +36,9 @@
                                      fxLayoutAlign="space-between center">
                                     <div class="h3"></div>
                                     <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                            aria-label="more" *ngIf="gift.roller">
-                                        <mat-icon>360</mat-icon>
-                                    </button>
-                                    <button mat-icon-button class="fuse-widget-flip-button"
-                                            aria-label="more" *ngIf="!gift.roller" (click)="getRoller(gift.id)">
-                                        <mat-icon>flash_on</mat-icon>
+                                            aria-label="more" >
+                                        <mat-icon *ngIf="gift.roller">360</mat-icon>
+                                        <mat-icon *ngIf="!gift.roller" (click)="getRoller(gift.id)">flash_on</mat-icon>
                                     </button>
                                 </div>
 
@@ -58,8 +55,8 @@
                                         aria-label="Flip widget">
                                     <mat-icon class="s-16">close</mat-icon>
                                 </button>
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <img src="../../../assets/images/rollers/foto1.jpeg">
+                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center" *ngIf="gift.roller?.avatar">
+                                    <img src="../../../assets/images/rollers/{{gift.roller?.avatar}}">
 
                                     <div class="h1 font-weight-1000">{{gift.roller?.name}}
                                     </div>
@@ -159,7 +156,7 @@
                                     <button mat-raised-button color="warn">Añadir</button>
                                 </div>
 
-                                <mat-table #table [dataSource]="gifts">
+                                <mat-table #table [dataSource]="arrayGifts">
 
                                     <!-- Avatar Column -->
                                     <ng-container matColumnDef="photo">
